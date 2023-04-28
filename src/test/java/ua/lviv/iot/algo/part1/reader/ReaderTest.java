@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ReaderTest {
     @Test
-    public void testReadTextFromConsole(){
+    public void testReadTextFromConsole() {
         String input = "some text _with under_scores_";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -19,7 +20,7 @@ class ReaderTest {
     }
 
     @Test
-    public void readMaximumWordLengthInputNumber(){
+    public void readMaximumWordLengthInputNumber() {
         String input = "10";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -29,8 +30,8 @@ class ReaderTest {
     }
 
     @Test
-    public void readMaximumWordLengthInputNotNumber(){
-        String input = "some text _with under_scores_";
+    public void readMaximumWordLengthInputNotNumber() {
+        String input = "some text";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         assertThrows(NumberFormatException.class, Reader::readMaximumWordLength);

@@ -15,45 +15,43 @@ public class UnderscoreFilter {
     private String text;
     private int maxWordLength;
 
-    UnderscoreFilter(){
+    UnderscoreFilter() {
         text = Reader.readTextFromConsole();
-        maxWordLength = Reader.readMaximumWordLength();
+        try {
+            maxWordLength = Reader.readMaximumWordLength();
+        } catch (NumberFormatException e) {
+            maxWordLength = 0;
+        }
+
     }
 
-    private List<String> wordsWithUnderscores(){
+    private List<String> wordsWithUnderscores() {
         Pattern pattern = Pattern.compile("([a-zA-Z]*_+[a-zA-Z]*)+");
         Matcher matcher = pattern.matcher(text);
         List<String> result = new ArrayList<String>();
-        while(matcher.find()){
+        while (matcher.find()) {
             result.add(matcher.group());
         }
         return result;
     }
 
 
-    public String SortWordsWithUnderscores(){
+    public String sortWordsWithUnderscores() {
         List<String> wordsWithUnderscore = wordsWithUnderscores();
         List<String> wordsWithUnderscoreShort = new LinkedList<>();
-        for(var wordWithUnderscore: wordsWithUnderscore){
-            if(wordWithUnderscore.replace("_","").length() <= maxWordLength){
+        for (var wordWithUnderscore : wordsWithUnderscore) {
+            if (wordWithUnderscore.replace("_", "").length() <= maxWordLength) {
                 wordsWithUnderscoreShort.add(wordWithUnderscore);
             }
         }
-        wordsWithUnderscoreShort.sort(Comparator.comparing(word -> word));
+        wordsWithUnderscoreShort
+                .sort(Comparator.comparing(word -> word.toLowerCase().replace("_", "")));
         return wordsWithUnderscoreShort.toString();
     }
 
     public static void main(String[] args) {
-        UnderscoreFilter text = new UnderscoreFilter("Lorem ipsu_m dolor sit_ amet, consectetur adipiscing elit." +
-                " Etiam nunc tortor, lacinia ut leo at, viver_ra sagittis ante." +
-                " Nunc la_oreet nibh mauris, si_t amet laoreet risus accumsan id." +
-                " Cras pulvinar at sapien ac suscipit. Mo_rbi non tempus odio, vel vestibulum elit." +
-                " Aliquam erat v_o_lutpat. In in libero tincidunt, lobortis leo eg_et, fermentum est." +
-                " Donec _sodales nibh at lorem tincidunt, at venenatis urna consequat." +
-                " Pellentesque _placerat qu_am in molestie fringilla." +
-                " Nullam dictum sit amet sapien in vehicula.", 10);
-//        UnderscoreFilter text2 = new UnderscoreFilter();
-        System.out.println(text.SortWordsWithUnderscores());
+        UnderscoreFilter textToFilter = new UnderscoreFilter();
+        System.out.println(textToFilter.sortWordsWithUnderscores());
     }
 }
 
