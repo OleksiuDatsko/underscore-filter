@@ -17,12 +17,7 @@ public class UnderscoreFilter {
 
     UnderscoreFilter() {
         text = Reader.readTextFromConsole();
-        try {
-            maxWordLength = Reader.readMaximumWordLength();
-        } catch (NumberFormatException e) {
-            maxWordLength = 0;
-        }
-
+        maxWordLength = Reader.readMaximumWordLength();
     }
 
     private List<String> wordsWithUnderscores() {

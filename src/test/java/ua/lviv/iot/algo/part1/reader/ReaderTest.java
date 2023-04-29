@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.InputMismatchException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,6 +35,6 @@ class ReaderTest {
         String input = "some text";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        assertThrows(NumberFormatException.class, Reader::readMaximumWordLength);
+        assertThrows(InputMismatchException.class, Reader::readMaximumWordLength);
     }
 }

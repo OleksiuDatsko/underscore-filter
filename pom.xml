@@ -17,9 +17,10 @@
         <lombok.version>1.18.26</lombok.version>
         <jacoco.version>0.8.8</jacoco.version>
         <spotbug.version>4.4.2</spotbug.version>
-        <checkstyle.version>3.1.2</checkstyle.version>
+        <checkstyle.version>3.2.2</checkstyle.version>
         <pmd.version>3.20.0</pmd.version>
         <google-java-format.version>1.16.0</google-java-format.version>
+        <maven.jar.version>3.2.0</maven.jar.version>
     </properties>
 
     <dependencies>
@@ -115,6 +116,19 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>ua.lviv.iot.algo.part1.UnderscoreFilter</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
