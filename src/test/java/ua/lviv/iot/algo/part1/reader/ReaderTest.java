@@ -10,13 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ReaderTest {
+    private Reader reader = new Reader();
     @Test
     public void testReadTextFromConsole() {
         String input = "some text _with under_scores_";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        String result = Reader.readTextFromConsole();
+        String result = reader.readTextFromConsole();
         assertEquals(input, result);
     }
 
@@ -26,7 +27,7 @@ class ReaderTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        int result = Reader.readMaximumWordLength();
+        int result = reader.readMaximumWordLength();
         assertEquals(Integer.parseInt(input), result);
     }
 
@@ -35,6 +36,6 @@ class ReaderTest {
         String input = "some text";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        assertThrows(InputMismatchException.class, Reader::readMaximumWordLength);
+        assertThrows(InputMismatchException.class,() -> reader.readMaximumWordLength());
     }
 }

@@ -3,10 +3,7 @@ package ua.lviv.iot.algo.part1;
 import lombok.AllArgsConstructor;
 import ua.lviv.iot.algo.part1.reader.Reader;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,8 +13,13 @@ public class UnderscoreFilter {
     private int maxWordLength;
 
     UnderscoreFilter() {
-        text = Reader.readTextFromConsole();
-        maxWordLength = Reader.readMaximumWordLength();
+        Reader reader = new Reader();
+        text = reader.readTextFromConsole();
+        try {
+            maxWordLength = reader.readMaximumWordLength();
+        } catch (InputMismatchException e){
+            maxWordLength = -1;
+        }
     }
 
     private List<String> wordsWithUnderscores() {
