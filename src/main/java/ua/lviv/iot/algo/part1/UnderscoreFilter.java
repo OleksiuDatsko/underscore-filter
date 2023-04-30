@@ -3,9 +3,12 @@ package ua.lviv.iot.algo.part1;
 import lombok.AllArgsConstructor;
 import ua.lviv.iot.algo.part1.reader.Reader;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.InputMismatchException;
 
 @AllArgsConstructor
 public class UnderscoreFilter {
@@ -17,7 +20,7 @@ public class UnderscoreFilter {
         text = reader.readTextFromConsole();
         try {
             maxWordLength = reader.readMaximumWordLength();
-        } catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             maxWordLength = -1;
         }
     }
@@ -35,7 +38,7 @@ public class UnderscoreFilter {
 
     public String sortWordsWithUnderscores() {
         List<String> wordsWithUnderscore = wordsWithUnderscores();
-        List<String> wordsWithUnderscoreShort = new LinkedList<>();
+        List<String> wordsWithUnderscoreShort = new ArrayList<>();
         for (var wordWithUnderscore : wordsWithUnderscore) {
             if (wordWithUnderscore.replace("_", "").length() <= maxWordLength) {
                 wordsWithUnderscoreShort.add(wordWithUnderscore);
@@ -44,11 +47,6 @@ public class UnderscoreFilter {
         wordsWithUnderscoreShort
                 .sort(Comparator.comparing(word -> word.toLowerCase().replace("_", "")));
         return wordsWithUnderscoreShort.toString();
-    }
-
-    public static void main(String[] args) {
-        UnderscoreFilter textToFilter = new UnderscoreFilter();
-        System.out.println(textToFilter.sortWordsWithUnderscores());
     }
 }
 

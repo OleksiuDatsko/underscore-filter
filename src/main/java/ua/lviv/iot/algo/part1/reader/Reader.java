@@ -18,7 +18,7 @@ public class Reader {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Invalid input");
-            throw(e);
+            throw e;
         }
     }
 }
