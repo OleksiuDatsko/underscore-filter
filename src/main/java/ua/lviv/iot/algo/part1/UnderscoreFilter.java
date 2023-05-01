@@ -1,34 +1,22 @@
 package ua.lviv.iot.algo.part1;
 
-import lombok.AllArgsConstructor;
-import ua.lviv.iot.algo.part1.reader.Reader;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.InputMismatchException;
 
-@AllArgsConstructor
 public class UnderscoreFilter {
-    private String text;
-    private int maxWordLength;
+    public static final Pattern PATTERN_WORDS_WITH_UNDERSCORE = Pattern.compile("([a-zA-Z]*_+[a-zA-Z]*)+");
 
-    UnderscoreFilter() {
-        Reader reader = new Reader();
-        text = reader.readTextFromConsole();
-        try {
-            maxWordLength = reader.readMaximumWordLength();
-        } catch (InputMismatchException e) {
-            maxWordLength = -1;
+    private List<String> wordsWithUnderscores(String text) {
+        if (text == null) {
+            return null;
         }
-    }
-
-    private List<String> wordsWithUnderscores() {
-        Pattern pattern = Pattern.compile("([a-zA-Z]*_+[a-zA-Z]*)+");
-        Matcher matcher = pattern.matcher(text);
-        List<String> result = new ArrayList<String>();
+        Matcher matcher = PATTERN_WORDS_WITH_UNDERSCORE.matcher(text);
+        List<String> result = new LinkedList<String>();
         while (matcher.find()) {
             result.add(matcher.group());
         }
@@ -36,8 +24,14 @@ public class UnderscoreFilter {
     }
 
 
-    public String sortWordsWithUnderscores() {
-        List<String> wordsWithUnderscore = wordsWithUnderscores();
+    public String sortWordsWithUnderscores(String text, int maxWordLength) {
+        if (text == null || text.isBlank()){
+            return "null";
+        }
+        List<String> wordsWithUnderscore = wordsWithUnderscores(text);
+        if (wordsWithUnderscore == null) {
+            return null;
+        }
         List<String> wordsWithUnderscoreShort = new ArrayList<>();
         for (var wordWithUnderscore : wordsWithUnderscore) {
             if (wordWithUnderscore.replace("_", "").length() <= maxWordLength) {
@@ -45,7 +39,8 @@ public class UnderscoreFilter {
             }
         }
         wordsWithUnderscoreShort
-                .sort(Comparator.comparing(word -> word.toLowerCase().replace("_", "")));
+                .sort(Comparator.comparing(word -> word.toLowerCase()
+                        .replace("_", "")));
         return wordsWithUnderscoreShort.toString();
     }
 }
